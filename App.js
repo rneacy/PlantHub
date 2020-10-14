@@ -7,7 +7,7 @@ import AwesomeButtonBlue from "react-native-really-awesome-button/src/themes/blu
 import AwesomeButtonC137 from "react-native-really-awesome-button/src/themes/c137"
 import 'react-native-gesture-handler'
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 
 const AppTitle = "PlantHub"
 
@@ -18,9 +18,9 @@ const isBenStinkyToday = () => {
 const Stack = createStackNavigator();
 
 const PlantComponent = (props) => {
-  const [needsWatering, setNeedsWatering] = useState(true);
+  const [needsWatering, setNeedsWatering] = useState(props.isWatered);
   return (
-    <View style = {{padding: 20}}>
+    <View style = {{padding: 20, paddingTop: 5, paddingBottom: 35}}>
       <Text style = {styles.normalText}>
         <Text style = {{fontSize: 20}}>I am a plant and my name is </Text>
       </Text>
@@ -43,7 +43,26 @@ const PlantComponent = (props) => {
   );
 }
 
-let plantInfo = {};
+let plantInfo = [
+  {"id": 0, "name": "Popo Romeo", "isWatered": false},
+  {"id": 1, "name": "Pepe Rosso", "isWatered": true},
+  {"id": 2, "name": "Poo poo", "isWatered": true},
+  {"id": 3, "name": "Wee wee", "isWatered": true},
+];
+
+function addNewPlant(name, isWatered) {
+  plantInfo.push({"id": plantInfo.slice[plantInfo.length - 1].id, "name": name, "isWatered": isWatered});
+}
+
+const AllPlants = (props) => {
+  return (
+    plantInfo.map(item => (
+      <React.Fragment key={item.id}>
+        <PlantComponent name={item.name} isWatered={item.isWatered} />
+      </React.Fragment>
+    ))
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -84,10 +103,12 @@ const App = () => {
             backgroundColor: "#44aa44"
           },
           headerTintColor: "#fff",
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
         >
         <Stack.Screen name = {AppTitle} component = {HomeScreen} options = {{headerShown: false}}></Stack.Screen>
         <Stack.Screen name = "PlantScreen" component = {PlantScreen} options = {{title: "Your Plants"}}></Stack.Screen>
+        <Stack.Screen name = "NewPlantScreen" component = {NewPlantScreen} options = {{title: "Add New Plant"}}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -122,13 +143,28 @@ const HomeScreen = ({navigation}) => {
 const PlantScreen = ({navigation}) => {
   return(
     <View style={styles.container}>
+        <View style={{padding: 10}}>
+          <AwesomeButtonC137
+            stretch
+            onPress = {() => {
+              navigation.navigate("NewPlantScreen");
+            }}
+          >
+            Add New Plant
+          </AwesomeButtonC137>
+        </View>
         <ScrollView bounces>
-          <PlantComponent name="Popo Romeo" isWatered = {false}/>
-          <PlantComponent name="Zebbedy" isWatered = {false}/>
-          <PlantComponent name="Unnamed plant" isWatered = {false} />
+          <AllPlants />
         </ScrollView>
     </View>
   );
 }
+
+const NewPlantScreen = ({navigation}) => {
+  return(
+    <Text>New plants woo!</Text>
+  );
+}
+
 
 export default App;
