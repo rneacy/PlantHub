@@ -8,6 +8,7 @@ import AwesomeButtonC137 from "react-native-really-awesome-button/src/themes/c13
 import 'react-native-gesture-handler'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
+import { StatusBar } from 'expo-status-bar';
 
 const AppTitle = "PlantHub"
 
@@ -66,7 +67,7 @@ const AllPlants = (props) => {
   }
   else{
     return (
-      <Text>No plants</Text>
+      <Text></Text>
     );
   }
 }
@@ -128,6 +129,7 @@ const App = () => {
 const HomeScreen = ({navigation}) => {
   return(
     <View style = {styles.home}>
+      <StatusBar barStyle={'dark-content'}/>
       <Text style = {styles.titleText}>
         Welcome to
         <Text style = {[styles.titleText, {fontSize: 60}]}>{"\n"}PlantHub</Text>
@@ -163,7 +165,7 @@ const PlantScreen = ({navigation, route}) => {
 
   return(
     <View style={styles.container}>
-        <View style={{padding: 10}}>
+        <View style={{padding: 10, backgroundColor: '#dddddd'}}>
           <AwesomeButtonC137
             stretch
             onPress = {() => {
@@ -172,7 +174,7 @@ const PlantScreen = ({navigation, route}) => {
           >
             Add New Plant
           </AwesomeButtonC137>
-          <Text>You have {plants.length} plants.</Text>
+          <Text style = {[styles.normalText, {textAlign: "center", textAlignVertical:"center"}]}>You have {plants.length} plants.</Text>
         </View>
         <ScrollView bounces>
           <AllPlants plants={plants}/>
