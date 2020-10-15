@@ -1,5 +1,5 @@
 import React , { useState } from 'react';
-import { View, Text, Image, ScrollView, TextInput , StyleSheet, Button} from 'react-native';
+import { View, Text, Image, ScrollView, TextInput , StyleSheet, Button, ToastAndroid } from 'react-native';
 import { useFonts, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
 import { Pacifico_400Regular } from '@expo-google-fonts/pacifico';
 import { AppLoading } from 'expo'
@@ -50,18 +50,25 @@ let plantInfo = [
   {"id": 3, "name": "Wee wee", "isWatered": true},
 ];
 
-function addNewPlant(name, isWatered) {
-  plantInfo.push({"id": plantInfo.slice[plantInfo.length - 1].id, "name": name, "isWatered": isWatered});
+function addNewPlant(name, isWatered, plantStorage, plantStorageCallback) {
+  plantStorageCallback(plantStorage.concat({"id": plantStorage[plantStorage.length - 1].id + 1, "name": name, "isWatered": isWatered}));
 }
 
 const AllPlants = (props) => {
-  return (
-    plantInfo.map(item => (
-      <React.Fragment key={item.id}>
-        <PlantComponent name={item.name} isWatered={item.isWatered} />
-      </React.Fragment>
-    ))
-  );
+  if(props.plants.length > 0){
+    return (
+      props.plants.map(item => (
+        <React.Fragment key={item.id}>
+          <PlantComponent name={item.name} isWatered={item.isWatered} />
+        </React.Fragment>
+      ))
+    );
+  }
+  else{
+    return (
+      <Text>No plants</Text>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -84,6 +91,10 @@ const styles = StyleSheet.create({
   },
   normalText: {
     fontFamily:"Quicksand_500Medium"
+  },
+  genericSubtitleText: {
+    fontFamily: "Quicksand_500Medium",
+    fontSize: 24
   }
 });
 
@@ -140,7 +151,16 @@ const HomeScreen = ({navigation}) => {
   );
 }
 
-const PlantScreen = ({navigation}) => {
+const PlantScreen = ({navigation, route}) => {
+  const [plants, getPlants] = useState(plantInfo);
+
+  React.useEffect( () => {
+    if (route.params?.newPlant) {
+      addNewPlant(route.params.newPlant.name, route.params.newPlant.owner, plants, getPlants);
+      ToastAndroid.showWithGravityAndOffset("Added new plant!", ToastAndroid.LONG, ToastAndroid.BOTTOM, 0, 200);
+    }
+  }, [route.params?.newPlant]);
+
   return(
     <View style={styles.container}>
         <View style={{padding: 10}}>
@@ -152,19 +172,61 @@ const PlantScreen = ({navigation}) => {
           >
             Add New Plant
           </AwesomeButtonC137>
+          <Text>You have {plants.length} plants.</Text>
         </View>
         <ScrollView bounces>
-          <AllPlants />
+          <AllPlants plants={plants}/>
         </ScrollView>
     </View>
   );
 }
 
-const NewPlantScreen = ({navigation}) => {
+const NewPlantScreen = ({navigation, route}) => {
   return(
-    <Text>New plants woo!</Text>
+    <View style={[styles.container, {padding: 20, justifyContent: "center"}]}>
+      <Text style = {[{paddingBottom: 5}, styles.genericSubtitleText]}>Enter your new plant's details.</Text>
+      <NewPlantForm navigation = {navigation}/>
+
+    </View>
   );
 }
 
+const NewPlantForm = ({navigation}) => {
+  const [newPlantName, setNewPlantName] = useState("")
+  const [newPlantOwner, setNewPlantOwner] = useState("")
+
+  return(
+    <View>
+      <FormEntry label = "Name" callback = {setNewPlantName}/>
+      <FormEntry label = "Owner" callback = {setNewPlantOwner}/>
+      <AwesomeButtonBlue
+        stretch
+        onPress = {() => {navigation.navigate('PlantScreen', { newPlant: {"name": newPlantName, "owner": newPlantOwner}})}}
+      >
+        Add Plant  
+      </AwesomeButtonBlue> 
+    </View>
+  )
+}
+
+const FormEntry = (props) => {
+  const [value, onChangeText] = useState('');
+  return (
+    <>
+      <View style = {{flex: 1, flexDirection: "row", marginBottom: 60}}>
+        <View style={{flex: 2, height: 50, backgroundColor: '#ddd', justifyContent:"center"}}>
+            <Text style={{textAlignVertical: "center", textAlign: "center", fontFamily: "Quicksand_700Bold"}}>{props.label}</Text>
+        </View>
+        <View style={{flex: 4, width: 50, height: 50, backgroundColor: '#d0d0d0', justifyContent:"center"}}>
+          <TextInput
+            style = {{padding: 5, paddingHorizontal: 10, marginHorizontal: 5, borderRadius: 3, backgroundColor: "#eeeeee", fontFamily: "Quicksand_500Medium"}}
+            onChangeText= {text => {onChangeText(text); props.callback(text);}}
+            value = {value}
+          />
+        </View>
+      </View>
+    </>
+  );
+}
 
 export default App;
