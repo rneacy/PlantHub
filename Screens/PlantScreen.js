@@ -1,7 +1,7 @@
 import React from 'react'
-import { FormEntry } from '../Components/Form.js'
+import { FormEntry } from '../Components/Form'
 import PlantComponent from '../Components/Plant'
-import { styles } from '../Util/Styles.js'
+import { styles } from '../Util/Styles'
 import { ToastAndroid } from 'react-native'
 import AwesomeButtonBlue from "react-native-really-awesome-button/src/themes/blue"
 import AwesomeButtonC137 from "react-native-really-awesome-button/src/themes/c137"

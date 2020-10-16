@@ -13,8 +13,9 @@ import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants'
 import regPushNotifs from './Util/regnotifs.js'
-import { PlantScreen, NewPlantScreen } from './Screens/PlantScreen.js'
-import { styles } from './Util/Styles.js'
+import { PlantScreen, NewPlantScreen } from './Screens/PlantScreen'
+import HomeScreen from './Screens/HomeScreen'
+import { styles } from './Util/Styles'
 
 const AppTitle = "PlantHub"
 
@@ -25,7 +26,6 @@ const isBenStinkyToday = () => {
 const Stack = createStackNavigator();
 
 const App = () => {
-
   let [fontsLoaded] = useFonts({Quicksand_500Medium, Quicksand_700Bold, Pacifico_400Regular});
 
   if(!fontsLoaded) {
@@ -49,33 +49,6 @@ const App = () => {
         <Stack.Screen name = "NewPlantScreen" component = {NewPlantScreen} options = {{title: "Add New Plant"}}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
-  );
-}
-
-const HomeScreen = ({navigation}) => {
-  return(
-    <View style = {styles.home}>
-      <StatusBar style={'light-content'}/>
-      <Text style = {styles.titleText}>
-        Welcome to
-        <Text style = {[styles.titleText, {fontSize: 60}]}>{"\n"}PlantHub</Text>
-      </Text>
-
-      <View style = { {paddingHorizontal: 50 }}>
-        <AwesomeButtonC137
-          stretch
-          onPress = {() => {
-            navigation.navigate("PlantScreen");
-            /*navigation.reset({
-              index: 0,
-              routes: [{name: "PlantScreen"}] 
-            });*/
-          }}
-        >
-          Enter
-        </AwesomeButtonC137>
-      </View>
-    </View>
   );
 }
 

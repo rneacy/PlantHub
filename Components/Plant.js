@@ -1,5 +1,5 @@
 import React from 'react'
-import { styles } from '../Util/Styles.js'
+import { styles } from '../Util/Styles'
 import { View, Text, Image, ScrollView, TextInput , StyleSheet, Button } from 'react-native';
 import AwesomeButtonBlue from "react-native-really-awesome-button/src/themes/blue"
 
