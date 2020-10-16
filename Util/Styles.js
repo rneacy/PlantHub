@@ -24,5 +24,9 @@ export const styles = StyleSheet.create({
     genericSubtitleText: {
       fontFamily: "Quicksand_500Medium",
       fontSize: 24
+    },
+    genericSubtitleTextLarge: {
+      fontFamily: "Quicksand_500Medium",
+      fontSize: 40
     }
   });

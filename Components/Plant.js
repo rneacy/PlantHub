@@ -6,7 +6,7 @@ import AwesomeButtonBlue from "react-native-really-awesome-button/src/themes/blu
 const Plant = (props) => {
     const [needsWatering, setNeedsWatering] = React.useState(props.isWatered);
     return (
-        <View style = {{padding: 20, paddingTop: 5, paddingBottom: 35}}>
+        <View style = {{padding: 20, paddingTop: (props.id === 0) ? 20 : 5, paddingBottom: 35}}>
             <Text style = {styles.normalText}>
                 <Text style = {{fontSize: 20}}>I am a plant and my name is </Text>
             </Text>

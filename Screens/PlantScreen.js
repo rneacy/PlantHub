@@ -29,7 +29,7 @@ export const PlantScreen = ({navigation, route}) => {
                 >
                 Add New Plant
                 </AwesomeButtonC137>
-                <Text style = {[styles.normalText, {textAlign: "center", textAlignVertical:"center"}]}>You have {plants.length} plants.</Text>
+                <Text style = {[styles.normalText, {paddingTop: 10, textAlign: "center", textAlignVertical:"center"}]}>You have {plants.length} plants.</Text>
             </View>
             <ScrollView bounces>
                 <AllPlants plants={plants}/>
@@ -73,14 +73,21 @@ const AllPlants = (props) => {
         return (
             props.plants.map(item => (
                 <React.Fragment key={item.id}>
-                    <PlantComponent name={item.name} isWatered={item.isWatered} />
+                    <PlantComponent id={item.id} name={item.name} isWatered={item.isWatered} />
                 </React.Fragment>
             ))
         );
     }
     else{
         return (
-            <Text>No plants.</Text>
+            <View style={{flex: 1, justifyContent:"center", padding:20}}>
+                <Text 
+                    style={[styles.genericSubtitleTextLarge, {textAlignVertical: "center", textAlign:"center"}]}
+                >
+                    You don't have any plants! :(
+                </Text>
+                <Text style={[styles.genericSubtitleText, {textAlign:"center",paddingTop:10, color:"#888"}]}>Add one above.</Text>
+            </View>
         );
     }
 }
