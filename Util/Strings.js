@@ -42,3 +42,20 @@ export const PlantScreenStrings = new LocalisedStrings({
         plantOwner: "Apporte à"
     }
 });
+
+export const PlantComponentStrings = new LocalisedStrings({
+    en:{
+        myName: "I'm a plant and my name is",
+        needWatering: "I need watering!",
+        quenched: "I'm quenched!",
+        waterMe: "Water me!",
+        noMoreWater: "No more water for me!"
+    },
+    fr:{
+        myName: "Je suis une plane et je m'appelle",
+        needWatering: "J'ai soif!",
+        quenched: "Je me suis désaltérée",
+        waterMe: "Arrosez-moi!",
+        noMoreWater: "Plus besoin de me arroser!"
+    }
+})
