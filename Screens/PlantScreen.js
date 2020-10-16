@@ -6,6 +6,7 @@ import { ToastAndroid } from 'react-native'
 import AwesomeButtonBlue from "react-native-really-awesome-button/src/themes/blue"
 import AwesomeButtonC137 from "react-native-really-awesome-button/src/themes/c137"
 import { View, Text, Image, ScrollView, TextInput , StyleSheet, Button } from 'react-native';
+import { PlantScreenStrings } from '../Util/Strings'
 
 //* MAIN PLANT DISPLAY SCREEN
 export const PlantScreen = ({navigation, route}) => {
@@ -27,7 +28,7 @@ export const PlantScreen = ({navigation, route}) => {
                         navigation.navigate("NewPlantScreen");
                     }}
                 >
-                Add New Plant
+                {PlantScreenStrings.addNewPlant}
                 </AwesomeButtonC137>
                 <Text style = {[styles.normalText, {paddingTop: 10, textAlign: "center", textAlignVertical:"center"}]}>You have {plants.length} plants.</Text>
             </View>
@@ -42,7 +43,7 @@ export const PlantScreen = ({navigation, route}) => {
 export const NewPlantScreen = ({navigation, route}) => {
     return(
         <View style={[styles.container, {padding: 20, justifyContent: "center"}]}>
-            <Text style = {[{paddingBottom: 5}, styles.genericSubtitleText]}>Enter your new plant's details.</Text>
+            <Text style = {[{paddingBottom: 5}, styles.genericSubtitleText]}>{PlantScreenStrings.newPlantDetails}</Text>
             <NewPlantForm navigation = {navigation}/>
         </View>
     );
@@ -55,13 +56,13 @@ const NewPlantForm = ({navigation}) => {
 
     return(
         <View>
-            <FormEntry label = "Name" callback = {setNewPlantName}/>
-            <FormEntry label = "Owner" callback = {setNewPlantOwner}/>
+            <FormEntry label = {PlantScreenStrings.plantName} callback = {setNewPlantName}/>
+            <FormEntry label = {PlantScreenStrings.plantOwner} callback = {setNewPlantOwner}/>
             <AwesomeButtonBlue
                 stretch
                 onPress = {() => {navigation.navigate('PlantScreen', { newPlant: {"name": newPlantName, "owner": newPlantOwner}})}}
             >
-            Add Plant  
+            {PlantScreenStrings.addPlantButton} 
             </AwesomeButtonBlue> 
         </View>
     )
@@ -84,9 +85,9 @@ const AllPlants = (props) => {
                 <Text 
                     style={[styles.genericSubtitleTextLarge, {textAlignVertical: "center", textAlign:"center"}]}
                 >
-                    You don't have any plants! :(
+                    {PlantScreenStrings.noPlants}
                 </Text>
-                <Text style={[styles.genericSubtitleText, {textAlign:"center",paddingTop:10, color:"#888"}]}>Add one above.</Text>
+                <Text style={[styles.genericSubtitleText, {textAlign:"center",paddingTop:10, color:"#888"}]}>{PlantScreenStrings.noPlantsAdd}</Text>
             </View>
         );
     }
