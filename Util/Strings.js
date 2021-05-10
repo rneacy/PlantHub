@@ -33,7 +33,7 @@ export const PlantScreenStrings = new LocalisedStrings({
         plantOwner: "Owner",
     },
     fr:{
-        noPlants: "Vous n'avez aucune plante! :(",
+        noPlants: "Vous n'avez pas de plante! :(",
         noPlantsAdd: "Installez-une au-dessus.",
         addNewPlant: "Nouvelle plante",
         newPlantDetails: "Saisissez les détails de la nouvelle plante.",
@@ -52,7 +52,7 @@ export const PlantComponentStrings = new LocalisedStrings({
         noMoreWater: "No more water for me!"
     },
     fr:{
-        myName: "Je suis une plane et je m'appelle",
+        myName: "Je suis une plante et je m'appelle",
         needWatering: "J'ai soif!",
         quenched: "Je me suis désaltérée",
         waterMe: "Arrosez-moi!",
